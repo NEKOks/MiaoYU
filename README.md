@@ -1,0 +1,122 @@
+# 喵语 (MiaoYu)
+
+基于 [RikkaHub](https://github.com/rikkahub/rikkahub) 3.3.0 的 Android 二次开发版本：
+在保留原生多模型聊天能力的基础上，加入了**多助手群聊**、**角色扮演**和**语音对话增强**。
+
+喵语 / MiaoYu — an Android LLM chat client forked from RikkaHub 3.3.0, adding group chats
+with multiple assistants, character roleplay and a round-based voice mode.
+
+---
+
+## 功能
+
+### 多助手群聊
+
+把几个助手拉进同一个会话，让它们轮流说话：
+
+- 每轮成员**随机顺序**发言，每人可配置 1–5 次
+- 之后按配置**自动接话**若干轮
+- 每个成员使用**自己的模型、角色卡、记忆和工具**，互不干扰
+- 消息上记录发言人 id，同一条消息气泡显示对应的头像和名字
+- 抽屉里群聊单独一栏，所有群成员都能在自己的助手列表里看到同一份记录
+- 宿主（会话挂靠的助手）只作为容器，不参与发言；群主是用户
+
+### 角色扮演
+
+- 角色卡字段：角色名、描述、性格、场景、用户身份、示例对话、作者注释、风格规则、旁白样式
+- 角色设定注入到 system 提示之后，作者注释注入到对话末尾，**不破坏提示词缓存**
+- 对白 / 旁白 / 动作 / 心理分段渲染，支持 `*动作*` 与 `（）` 两种旁白样式
+- 支持导入 SillyTavern 角色卡（`chara_card_v2` / `v3`，JSON 或 PNG），导入时同时填角色名和助手名
+- 样板：`docs/sample-character-card.json`
+
+### 语音
+
+- 回合制语音模式：打字说「语音聊天」即可进入，25 秒无人说话会自动找话题
+- **本地断句**：让只能整段上传的 ASR（DeepSeek / MiMo / Step）也能用语音模式
+- 后台录音：前台服务 + 通知栏「结束语音」按钮
+- 语音时不自动展开浮窗
+- 角色扮演时 TTS **只念台词**，不念动作和心理描写
+- 系统 TTS 可选发音人
+
+### 记忆
+
+- 所有助手共用一个记忆系统；群聊里每个成员**读写各自的记忆库**，与私聊互通
+- 记忆整理进度按 `(会话, 记忆库)` 分别记录，成员之间互不影响
+- 群聊里别人的发言只作为背景（标注名字、截断），不会记成「自己说过的话」
+
+### 界面
+
+- 四套可切换的桌面外观（喵语 / 猫匣 / 绒 / 星语）
+- 切换助手后直接进入该助手最近的会话
+- 抽屉按「聊天 / 群聊 / 文件夹」分栏
+
+---
+
+## 构建
+
+环境：JDK 21、Gradle 9.6（或直接用 `gradlew`）、Android SDK。
+
+```bash
+# Debug APK
+./gradlew assembleGithubDebug
+
+# Release APK
+./gradlew assembleGithubRelease
+```
+
+产物在 `app/build/outputs/apk/github/`。
+
+`local.properties` 需要指向本机 SDK：
+
+```properties
+sdk.dir=/path/to/Android/Sdk
+```
+
+发布版签名从 `local.properties` 读取（`storeFile` / `storePassword` / `keyAlias` / `keyPassword`），
+**这个文件不要提交**。
+
+---
+
+## 目录结构
+
+| 模块 | 说明 |
+|---|---|
+| `app` | 主应用：UI、ViewModel、业务逻辑 |
+| `ai` | 各家模型 Provider 的 SDK 抽象层 |
+| `search` | 联网搜索服务（Exa / Tavily / Bing / Brave / SearXNG 等） |
+| `speech` | TTS / ASR 实现 |
+| `workspace` | 沙箱文件系统与 shell 工具 |
+| `terminal` | 终端模拟器内核 |
+| `web` / `web-ui` | 内嵌 Web 服务器与前端 |
+| `document` | PDF / DOCX / PPTX / EPUB 解析 |
+| `ui` `material3` `common` | 通用 UI 组件与工具 |
+
+二次开发的改动记录见 [`CHANGELOG-miao.md`](CHANGELOG-miao.md)。
+
+---
+
+## 已知限制
+
+- 群聊里连续多条 assistant 消息，在严格交替的提供商（Anthropic / Gemini）上可能被拒
+- 群聊的「每人次数 / 接话轮数」目前写死在建群逻辑里，暂未提供群设置页
+- 群聊中某成员触发工具审批时，本轮剩余成员不再发言
+- 本地断句比服务端断句慢约 1 秒
+
+---
+
+## 许可证
+
+本项目沿用上游的 **GNU Affero General Public License v3.0**，见 [LICENSE](LICENSE)。
+
+因为基于 AGPL-3.0 项目二次开发，**修改后的版本同样必须以 AGPL-3.0 开源**，
+并保留原始版权声明。如果你把它部署成网络服务供他人使用，同样需要提供对应源码。
+
+## 致谢
+
+- 上游项目：[RikkaHub](https://github.com/rikkahub/rikkahub)（AGPL-3.0）
+- 角色卡格式：[Character Card V2 规范](https://github.com/malfoyslastname/character-card-spec-v2)
+
+## 免责声明
+
+角色扮演与群聊会产生 AI 生成内容，请自行判断并遵守所在地法律法规及服务条款。
+本项目不对使用过程中的数据与内容负责。

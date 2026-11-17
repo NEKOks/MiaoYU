@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 简约猫头：三角耳 + 圆脸 + 两只眼睛 + 小粉鼻 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 左耳 -->
+    <path
+        android:fillColor="#3A3A3A"
+        android:pathData="M34,46 L30,24 L49,34 Z" />
+    <!-- 右耳 -->
+    <path
+        android:fillColor="#3A3A3A"
+        android:pathData="M74,46 L78,24 L59,34 Z" />
+    <!-- 脸 -->
+    <path
+        android:fillColor="#3A3A3A"
+        android:pathData="M28,60 A26,26 0 1,0 80,60 A26,26 0 1,0 28,60 Z" />
+    <!-- 左眼 -->
+    <path
+        android:fillColor="#FFF6F2"
+        android:pathData="M44,56 A4,4.6 0 1,0 52,56 A4,4.6 0 1,0 44,56 Z" />
+    <!-- 右眼 -->
+    <path
+        android:fillColor="#FFF6F2"
+        android:pathData="M56,56 A4,4.6 0 1,0 64,56 A4,4.6 0 1,0 56,56 Z" />
+    <!-- 鼻子的三角形 -->
+    <path
+        android:fillColor="#E88E8E"
+        android:pathData="M51,66 L57,66 L54,70 Z" />
+</vector>

@@ -1,0 +1,26 @@
+# 构建产物
+build/
+/captures
+
+# Gradle
+.gradle
+.kotlin
+
+# IDE
+*.iml
+.idea/
+.DS_Store
+.cursor
+.history
+.externalNativeBuild
+.cxx
+
+# 本机配置与签名
+local.properties
+*.jks
+*.keystore
+*.apk
+*.aab
+
+# Firebase 配置：CI 从 secret 写入，本地是占位文件
+app/google-services.json

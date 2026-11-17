@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 绒：粉底 + 深猫 -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+  <background android:drawable="@drawable/ic_bg_pink" />
+  <foreground android:drawable="@drawable/ic_cat_foreground" />
+  <monochrome android:drawable="@drawable/ic_cat_monochrome" />
+</adaptive-icon>

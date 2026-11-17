@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 猫匣：深底 + 浅猫 -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+  <background android:drawable="@drawable/ic_bg_dark" />
+  <foreground android:drawable="@drawable/ic_cat_foreground_light" />
+  <monochrome android:drawable="@drawable/ic_cat_monochrome" />
+</adaptive-icon>
