@@ -52,57 +52,6 @@ with multiple assistants, character roleplay and a round-based voice mode.
 
 ---
 
-## 构建
-
-环境：JDK 21、Gradle 9.6（或直接用 `gradlew`）、Android SDK。
-
-```bash
-# Debug APK
-./gradlew assembleGithubDebug
-
-# Release APK
-./gradlew assembleGithubRelease
-```
-
-产物在 `app/build/outputs/apk/github/`。
-
-`local.properties` 需要指向本机 SDK：
-
-```properties
-sdk.dir=/path/to/Android/Sdk
-```
-
-发布版签名从 `local.properties` 读取（`storeFile` / `storePassword` / `keyAlias` / `keyPassword`），
-**这个文件不要提交**。
-
----
-
-## 目录结构
-
-| 模块 | 说明 |
-|---|---|
-| `app` | 主应用：UI、ViewModel、业务逻辑 |
-| `ai` | 各家模型 Provider 的 SDK 抽象层 |
-| `search` | 联网搜索服务（Exa / Tavily / Bing / Brave / SearXNG 等） |
-| `speech` | TTS / ASR 实现 |
-| `workspace` | 沙箱文件系统与 shell 工具 |
-| `terminal` | 终端模拟器内核 |
-| `web` / `web-ui` | 内嵌 Web 服务器与前端 |
-| `document` | PDF / DOCX / PPTX / EPUB 解析 |
-| `ui` `material3` `common` | 通用 UI 组件与工具 |
-
-二次开发的改动记录见 [`CHANGELOG-miao.md`](CHANGELOG-miao.md)。
-
----
-
-## 已知限制
-
-- 群聊里连续多条 assistant 消息，在严格交替的提供商（Anthropic / Gemini）上可能被拒
-- 群聊的「每人次数 / 接话轮数」目前写死在建群逻辑里，暂未提供群设置页
-- 群聊中某成员触发工具审批时，本轮剩余成员不再发言
-- 本地断句比服务端断句慢约 1 秒
-
----
 
 ## 许可证
 
